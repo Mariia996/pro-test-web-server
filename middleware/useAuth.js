@@ -1,3 +1,4 @@
+
 const passport = require('passport')
 
 require('../configs/passport-config')
@@ -18,3 +19,5 @@ const useAuth = (req, res, next) => {
 }
 
 module.exports = useAuth
+
+

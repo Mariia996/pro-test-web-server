@@ -1,20 +1,20 @@
+/* eslint-disable object-curly-spacing */
 const passport = require('passport')
-const { ExtractJwt, Strategy } = require('passport-jwt')
+const {ExtractJwt, Strategy} = require('passport-jwt')
 require('dotenv').config()
+const {TOKEN_KEY} = process.env
 
-const User = require('../models')
-
-const { JWT_SECRED } = process.env
+const {users: service} = require('../services')
 
 const settings = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: JWT_SECRED,
+  secretOrKey: TOKEN_KEY,
 }
 
 passport.use(
   new Strategy(settings, async (payload, done) => {
     try {
-      const user = await User.findById(payload.userId)
+      const user = await service.findById(payload.id)
       if (!user) {
         throw new Error('User not found')
       }
@@ -22,5 +22,5 @@ passport.use(
     } catch (error) {
       done(error)
     }
-  })
+  }),
 )

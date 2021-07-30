@@ -2,7 +2,7 @@ const express = require('express')
 const cors = require('cors')
 
 const {
-  // authRouter,
+  authRouter,
   // usersRouter,
   testsRouter
 } = require('./routes/api')
@@ -11,7 +11,7 @@ const app = express()
 
 app.use(cors())
 
-// app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/auth', authRouter)
 // app.use('/api/v1/users', usersRouter)
 app.use('/api/v1/tests', testsRouter)
 

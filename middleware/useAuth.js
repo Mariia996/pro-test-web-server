@@ -1,7 +1,6 @@
-
 const passport = require('passport')
 
-require('../configs/passport-config')
+require('../configs/config-passport')
 
 const useAuth = (req, res, next) => {
   passport.authenticate('jwt', { session: false }, (error, user) => {
@@ -19,5 +18,3 @@ const useAuth = (req, res, next) => {
 }
 
 module.exports = useAuth
-
-

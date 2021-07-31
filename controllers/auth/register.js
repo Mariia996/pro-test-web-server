@@ -16,7 +16,6 @@ const register = async (req, res, next) => {
       return
     }
     const newUser = await service.add(req.body)
-    const {password, ...result} = newUser
     const id = newUser._id
     const payload = {id}
     const {TOKEN_KEY} = process.env
@@ -29,7 +28,7 @@ const register = async (req, res, next) => {
       code: 201,
       message: 'Success create',
       data: {
-        result,
+        user: newUser.email,
         token,
       },
     })

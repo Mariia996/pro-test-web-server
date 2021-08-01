@@ -27,7 +27,8 @@ const login = async (req, res, next) => {
       status: 'success',
       code: 200,
       data: {
-        result: token,
+        user: user.email,
+        token,
       },
     })
   } catch (error) {

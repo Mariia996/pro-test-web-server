@@ -1,7 +1,7 @@
 const getTheoryTests = require('./getTheoryTests')
 
 const tests = {
-    getTheoryTests
+  getTheoryTests
 }
 
 module.exports = tests

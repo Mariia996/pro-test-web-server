@@ -28,7 +28,9 @@ const register = async (req, res, next) => {
       code: 201,
       message: 'Success create',
       data: {
-        user: newUser.email,
+        user: {
+          email: newUser.email,
+        },
         token,
       },
     })

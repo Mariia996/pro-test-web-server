@@ -1,9 +1,9 @@
-const tests = require('./tests')
+const questions = require('./questions')
 const auth = require('./auth')
 const users = require('./users')
 
 module.exports = {
-  tests,
+  questions,
   auth,
-  users,
+  users
 }

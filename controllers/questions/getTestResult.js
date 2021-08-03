@@ -20,6 +20,8 @@ const getTestResult = async (req, res, next) => {
     const answerId = answers.map(answer => answer._id)
     const answerUser = answers.map(answer => answer.userAnswer)
 
+    const oneQuestions = questions.find(question => answerId.includes(question.id))
+
     const rightAnswers = questions
       .filter(question => answerId.includes(question.id))
       .filter(question => answerUser.includes(question.rightAnswer))
@@ -29,6 +31,7 @@ const getTestResult = async (req, res, next) => {
       code: 200,
       data: {
         rightAnswers: rightAnswers,
+        type: oneQuestions.questionType,
       },
     })
   } catch (error) {

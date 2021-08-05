@@ -3,10 +3,19 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
 const {users: service} = require('../../services')
+const {auth} = require('../../utils/validationSchemas')
 
 const login = async (req, res, next) => {
   const {email, password} = req.body
   try {
+    const {error} = auth.validSchemaAuth.validate({email, password})
+    if (error) {
+      return res.status(400).json({
+        status: 'error',
+        code: 400,
+        message: 'Bad request',
+      })
+    }
     const user = await service.getOne({email})
     if (!user || !user.validatePassword(password)) {
       res.status(400).json({

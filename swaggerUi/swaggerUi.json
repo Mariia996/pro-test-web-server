@@ -1,0 +1,303 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+     "title": "Pro Test API docs",
+    "description": "API documentation for GoIT project 'Pro Test'.",
+    "version": "2.0.0",
+    "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      },
+      "contact": {
+        "name": "Backend github repository",
+        "url": "https://"
+      }
+    },
+    "produces": ["application/json"],
+    "servers": [
+      {
+        "url": "http://localhost:4000",
+        "description": "Development server"
+      }
+    ],
+    "tags": [
+    {
+      "name": "AUTH",
+      "description": "Authorization endpoints"
+    },
+     {
+      "name": "USERS",
+      "description": "Users endpoints"
+    },
+     {
+      "name": "TESTS",
+      "description": "Tests endpoints"
+    }
+    ],
+    "paths": {
+        "/api/v1/auth/register": {
+            "post": {
+                "tags": ["AUTH"],
+                "summary": "User registration",
+                "parameters": [],
+                "requestBody": {
+                    "description": "Registration's object",
+                    "required": true,
+                    "content": {
+                       "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegistrationRequest"
+                            }
+                       }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success create",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RegistrationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Already register"
+                    }
+                }
+
+            }
+        },
+        "/api/v1/auth/login": {
+            "post": {
+                "tags": ["AUTH"],
+                 "summary": "User authentication",
+                "parameters": [],
+                "requestBody": {
+                    "description": "Authentication's object",
+                    "required": true,
+                    "content": {
+                       "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                       }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Incorrect email or password"
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/logout": {
+            "post": {
+                "tags": ["AUTH"],
+                "summary": "User logout",
+                "security": [{"Bearer Token": []}],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Logout success",
+                         "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LogoutResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Not authorize"
+                    }
+                }
+            }
+        },
+        "/api/v1/users/current": {
+             "get": {
+                "tags": ["USERS"],
+                "summary": "Get current user",
+                "security": [{"Bearer Token": []}],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Get success",
+                         "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CurrentUserResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Not authorize"
+                    }
+                }
+            }
+        },
+        "/api/v1/tests/all/:questionType": {
+             "get": {
+                "tags": ["TESTS"],
+                "summary": "Get all questions by type",
+                "security": [{"Bearer Token": []}],
+                "parameters": []
+            }
+        },
+
+        "/api/v1/tests/": {
+             "post": {
+                "tags": ["TESTS"]
+            }
+        },
+        "/api/v1/tests/many": {
+             "post": {
+                "tags": ["TESTS"]
+            }
+        },
+        "/api/v1/tests/result": {
+             "get": {
+                "tags": ["TESTS"]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "RegistrationRequest": {
+                "required": ["email", "password"],
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "User's email",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "User's password",
+                        "example": "12345test"
+                    }
+                }
+            },
+            "RegistrationResponse": {
+                "type":"object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Success create"
+                    },
+                    "data": {
+                        "type":"object",
+                         "properties": {
+                            "user": {
+                            "type":"object",
+                            "properties": {
+                                "email": {
+                                    "type": "string",
+                                    "description": "User's email",
+                                    "format":"email"
+                                }
+                            }
+                        },
+                        "token": {
+                            "type": "string",
+                            "description": "Session's access token",
+                            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMGJhMmQ0MmQxNTI1OWNiM2YwYzg0MiIsImlhdCI6MTYyODE1MjUzM30.Jy66w-eLFvvTVWFfdAysMOZ902dLz2n0Xly-LeBxjHY"
+                        }
+                    }
+                }
+              }
+            },
+           "LoginRequest": {
+            "required": ["email", "password"],
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "User's email",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "User's password",
+                        "example": "12345test"
+                    }
+                }
+           },
+           "LoginResponse": {
+            "type":"object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Success create"
+                    },
+                    "data": {
+                        "type":"object",
+                         "properties": {
+                            "user": {
+                            "type":"object",
+                            "properties": {
+                                "email": {
+                                    "type": "string",
+                                    "description": "User's email",
+                                    "format":"email"
+                                }
+                            }
+                        },
+                        "token": {
+                            "type": "string",
+                            "description": "Session's access token",
+                            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMGJhMmQ0MmQxNTI1OWNiM2YwYzg0MiIsImlhdCI6MTYyODE1MjUzM30.Jy66w-eLFvvTVWFfdAysMOZ902dLz2n0Xly-LeBxjHY"
+                        }
+                    }
+                }
+              }
+           },
+           "LogoutResponse": {
+            "type":"object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Logout success"
+                    }
+           }
+        },
+        "CurrentUserResponse": {
+            "type":"object",
+            "properties": {
+               "message": {
+                        "type": "string",
+                        "example": "Get success"
+                    }, 
+              "data": {
+                   "type":"object",
+                   "properties": {
+                       "user": {
+                            "type":"object",
+                            "properties": {
+                                "email": {
+                                    "type": "string",
+                                    "description": "User's email",
+                                    "format":"email"
+                                }
+                            }
+                        }
+                   }
+              }
+            }
+        }
+    }
+}
+}

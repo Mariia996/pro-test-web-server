@@ -9,6 +9,6 @@ router.post('/', express.json(), ctrl.addOne)
 
 router.post('/many', express.json(), ctrl.addMany)
 
-router.get('/result', ctrl.getTestResult)
+router.post('/result', express.json(), ctrl.getResult)
 
 module.exports = router

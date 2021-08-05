@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const {questions: ctrl} = require('../../controllers')
+const { questions: ctrl } = require('../../controllers')
 
 router.get('/all/:questionType', ctrl.getTests)
 

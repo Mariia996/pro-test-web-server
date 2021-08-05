@@ -1,5 +1,6 @@
 // eslint-disable-next-line object-curly-spacing
 const {tests: service} = require('../../services')
+const {result} = require('../../utils/validationSchemas')
 
 const getResult = async (req, res, next) => {
   const answers = req.body
@@ -15,6 +16,15 @@ const getResult = async (req, res, next) => {
   //   },
   // ]
   try {
+    const {error} = result.validSchemaResult.validate(answers)
+    if (error) {
+      return res.status(400).json({
+        status: 'error',
+        code: 400,
+        message: 'Bad request',
+      })
+    }
+
     const questions = await service.getAll()
 
     const answerId = answers.map(answer => answer._id)

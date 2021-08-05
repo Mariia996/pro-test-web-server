@@ -1,11 +1,20 @@
 /* eslint-disable object-curly-spacing */
 const jwt = require('jsonwebtoken')
 const {users: service} = require('../../services')
+const {auth} = require('../../utils/validationSchemas')
 
 const register = async (req, res, next) => {
   // eslint-disable-next-line no-unused-vars
   const {email, password} = req.body
   try {
+    const {error} = auth.validSchemaAuth.validate({email, password})
+    if (error) {
+      return res.status(400).json({
+        status: 'error',
+        code: 400,
+        message: 'Bad request',
+      })
+    }
     const user = await service.getOne({email})
     if (user) {
       res.status(409).json({

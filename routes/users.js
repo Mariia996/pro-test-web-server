@@ -1,9 +1,9 @@
 /* eslint-disable object-curly-spacing */
 const express = require('express')
 
-const { useAuth } = require('../../middleware')
+const { useAuth } = require('../middleware')
 
-const {users: ctrl} = require('../../controllers')
+const {users: ctrl} = require('../controllers')
 
 const router = express.Router()
 

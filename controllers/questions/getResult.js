@@ -4,24 +4,13 @@ const {result} = require('../../utils/validationSchemas')
 
 const getResult = async (req, res, next) => {
   const answers = req.body
-  // const answers = [
-  //   {
-  //     _id: '6107d49073048a242080648e',
-  //     userAnswer:
-  //       'Answers the question whether the product is being created correctly in terms of customer expectations',
-  //   },
-  //   {
-  //     _id: '6107d49073048a242080648f',
-  //     userAnswer: 'All requirements must be known at the beginning of the project life cycle',
-  //   },
-  // ]
   try {
     const {error} = result.validSchemaResult.validate(answers)
     if (error) {
       return res.status(400).json({
         status: 'error',
         code: 400,
-        message: 'Bad request',
+        message: 'Bad request or not enough answers',
       })
     }
 

@@ -3,7 +3,7 @@ const router = express.Router()
 
 const { questions: ctrl } = require('../../controllers')
 
-router.get('/all/:questionType', ctrl.getTests)
+router.get('/:questionType', ctrl.getTests)
 
 router.post('/', express.json(), ctrl.addOne)
 

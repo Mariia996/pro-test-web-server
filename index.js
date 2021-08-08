@@ -2,9 +2,15 @@
 const express = require('express')
 const cors = require('cors')
 
+const swaggerUi = require('swagger-ui-express')
+
+const swaggerDocument = require('./swaggerUi/swaggerUi.json')
+
 const {authRouter, usersRouter, testsRouter} = require('./routes')
 
 const app = express()
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument)) // http://localhost:4000/api-docs/
 
 app.use(cors())
 

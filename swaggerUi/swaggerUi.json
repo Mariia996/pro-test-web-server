@@ -1,0 +1,841 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+     "title": "Pro Test API docs",
+    "description": "API documentation for GoIT project 'Pro Test'.",
+    "version": "2.0.0",
+    "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      },
+      "contact": {
+        "name": "Backend github repository",
+        "url": "https://"
+      }
+    },
+    "produces": ["application/json"],
+    "servers": [
+      {
+        "url": "http://localhost:4000",
+        "description": "Development server"
+      }
+    ],
+    "tags": [
+    {
+      "name": "AUTH",
+      "description": "Authorization endpoints"
+    },
+     {
+      "name": "USERS",
+      "description": "Users endpoints"
+    },
+     {
+      "name": "TESTS",
+      "description": "Tests endpoints"
+    }
+    ],
+    "paths": {
+        "/api/v1/auth/register": {
+            "post": {
+                "tags": ["AUTH"],
+                "summary": "User registration",
+                "parameters": [],
+                "requestBody": {
+                    "description": "Registration's object",
+                    "required": true,
+                    "content": {
+                       "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegistrationRequest"
+                            }
+                       }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success create",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RegistrationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Already register"
+                    }
+                }
+
+            }
+        },
+        "/api/v1/auth/login": {
+            "post": {
+                "tags": ["AUTH"],
+                 "summary": "User authentication",
+                "parameters": [],
+                "requestBody": {
+                    "description": "Authentication's object",
+                    "required": true,
+                    "content": {
+                       "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                       }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Incorrect email or password"
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/logout": {
+            "post": {
+                "tags": ["AUTH"],
+                "summary": "User logout",
+                "security": [{"Bearer": []}],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Logout success",
+                         "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LogoutResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Not authorize"
+                    }
+                }
+            }
+        },
+        "/api/v1/users/current": {
+             "get": {
+                "tags": ["USERS"],
+                "summary": "Get current user",
+                "security": [{"Bearer": []}],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Get success",
+                         "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CurrentUserResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Not authorize"
+                    }
+                }
+            }
+        },
+        "/api/v1/tests/{questionType}": {
+             "get": {
+                "tags": ["TESTS"],
+                "summary": "Get all questions by type",
+                "security": [{"Bearer": []}],
+                "parameters": [
+                    {
+                        "name": "questionType",
+                        "in": "path",
+                        "required": true,
+                        "description": "Test's type question(theory or practice)",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AllQuestionsTestsResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Not authorize"
+                    }
+                }
+            }
+        },
+
+        "/api/v1/tests/": {
+             "post": {
+                "tags": ["TESTS"],
+                "summary": "Create one question",
+                "security": [{"Bearer": []}],
+                   "requestBody": {
+                    "description": "Test's object",
+                    "required": true,
+                    "content": {
+                       "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/OneQuestionTestsRequest"
+                            }
+                       }
+                    }
+                },
+                "responses": {
+                "201": {
+                    "description": "Success create",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                 "$ref": "#/components/schemas/OneQuestionTestsResponse"
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad request"
+                },
+                "401": {
+                    "description": "Not authorize"
+                }
+                ,
+                "409": {
+                    "description": "This question already exist"
+                }
+             }
+            } 
+        },
+        "/api/v1/tests/many": {
+             "post": {
+                "tags": ["TESTS"],
+                "summary": "Create many questions",
+                "security": [{"Bearer": []}],
+                "requestBody": {
+                    "description": "Test's array",
+                    "required": true,
+                    "content": {
+                       "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ManyQuestionTestsRequest"
+                            }
+                       }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success create",
+                        "content": {
+                        "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ManyQuestionsResponse"
+                                }
+                         }
+                        }
+                    },
+                    "401": {
+                        "description": "Not authorize"
+                    }
+                }
+            }
+        },
+        "/api/v1/tests/result": {
+             "post": {
+                "tags": ["TESTS"],
+                 "summary": "User's results",
+                  "security": [{"Bearer": []}],
+                  "requestBody": {
+                      "description": "Results's array",
+                      "required": true,
+                      "content": {
+                       "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserResultsRequest"
+                            }
+                       }
+                    }
+                  },
+                  "responses": {
+                      "200": {
+                        "description": "Answers added successfully",
+                        "content": {
+                        "application/json": {
+                            "schema": {
+                                 "$ref": "#/components/schemas/UserResultsResponse"
+                            }
+                        }
+                    }
+                      },
+                      "400": {
+                          "description": "Bad request or not enough answers"
+                      },
+                      "401": {
+                        "description": "Not authorize"
+                    }
+                  }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "RegistrationRequest": {
+                "required": ["email", "password"],
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "User's email",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "User's password",
+                        "example": "12345test"
+                    }
+                }
+            },
+            "RegistrationResponse": {
+                "type":"object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Success create"
+                    },
+                    "data": {
+                        "type":"object",
+                         "properties": {
+                            "user": {
+                            "type":"object",
+                            "properties": {
+                                "email": {
+                                    "type": "string",
+                                    "description": "User's email",
+                                    "format":"email"
+                                }
+                            }
+                        },
+                        "token": {
+                            "type": "string",
+                            "description": "Session's access token",
+                            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMGJhMmQ0MmQxNTI1OWNiM2YwYzg0MiIsImlhdCI6MTYyODE1MjUzM30.Jy66w-eLFvvTVWFfdAysMOZ902dLz2n0Xly-LeBxjHY"
+                        }
+                    }
+                }
+              }
+            },
+           "LoginRequest": {
+            "required": ["email", "password"],
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "User's email",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "User's password",
+                        "example": "12345test"
+                    }
+                }
+           },
+           "LoginResponse": {
+            "type":"object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Success create"
+                    },
+                    "data": {
+                        "type":"object",
+                         "properties": {
+                            "user": {
+                            "type":"object",
+                            "properties": {
+                                "email": {
+                                    "type": "string",
+                                    "description": "User's email",
+                                    "format":"email"
+                                }
+                            }
+                        },
+                        "token": {
+                            "type": "string",
+                            "description": "Session's access token",
+                            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMGJhMmQ0MmQxNTI1OWNiM2YwYzg0MiIsImlhdCI6MTYyODE1MjUzM30.Jy66w-eLFvvTVWFfdAysMOZ902dLz2n0Xly-LeBxjHY"
+                        }
+                    }
+                }
+              }
+           },
+           "LogoutResponse": {
+            "type":"object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Logout success"
+                    }
+           }
+        },
+        "CurrentUserResponse": {
+            "type":"object",
+            "properties": {
+               "message": {
+                        "type": "string",
+                        "example": "Get success"
+                    }, 
+              "data": {
+                   "type":"object",
+                   "properties": {
+                       "user": {
+                            "type":"object",
+                            "properties": {
+                                "email": {
+                                    "type": "string",
+                                    "description": "User's email",
+                                    "format":"email"
+                                }
+                            }
+                        }
+                   }
+              }
+            }
+        },
+        "AllQuestionsTestsResponse": {
+            "type":"object",
+            "properties": {
+                "message": {
+                "type": "string",
+                "example": "Questions successfully loaded"
+                },
+                "data": {
+                     "type":"object",
+                     "properties": {
+                         "tests": {
+                            "type":"array",
+                             "items": {
+                                  "type": "object",
+                                  "properties": {
+                                      "answers": {
+                                          "type":"array",
+                                          "items": {
+                                                "type": "string"
+                                          },
+                                          "description": "Variants response"
+                                      },
+                                      "_id": {
+                                          "type": "string",
+                                          "description": "Question's id"
+                                      },
+                                      "question": {
+                                          "type": "string",
+                                          "description": "Test's question"
+                                      },
+                                      "rightAnswer": {
+                                          "type": "string",
+                                          "description": "Right answer"
+                                      },
+                                      "questionType": {
+                                           "type": "string",
+                                          "description": "Type of question"
+                                      }
+                                  }
+                             },
+                              "example": 
+                                [ {
+                                    "description":"Example of a theory test array:",
+                                     "tests": [
+                                        {
+                                        "answers": [
+                                            "If both are running, do sanity tests first and then smoke testing",
+                                            "Sanity Testing is also called Tester Acceptance Testing",
+                                            "Smoke and sanity tests can be performed using an automation tool",
+                                            "Smoke testing performed for a specific build is also called build verification test",
+                                            "All options are correct",
+                                            "All options are incorrent"
+                                        ],
+                                        "_id": "6107d7d7d592102ae4466ac8",
+                                        "question": "What's wrong appealing to Smoke and sanity tests?",
+                                        "rightAnswer": "If both are running, do sanity tests first and then smoke testing",
+                                        "questionType": "theory"
+                                    }
+                                   ]
+                                },
+                                {
+                                    "description":"Example of a practice test array:",
+                                    "tests": [
+                                        {
+                                        "answers": [
+                                            "The stage at which the testing strategy is determined",
+                                            "Software testing life cycle",
+                                            "Final stage of software testing",
+                                            "This abbreviation has nothing to do with testing",
+                                            "All options are correct",
+                                            "All options are incorrect"
+                                        ],
+                                        "_id": "6107d49073048a242080649c",
+                                        "question": "STLC is – ",
+                                        "rightAnswer": "Software testing life cycle",
+                                        "questionType": "practice"
+                                    }
+                                    ]
+                                }
+                                    
+                            ]
+
+                         }
+                     }
+                 },
+                 "total": {
+                    "type": "number",
+                    "minimum": 12,
+                    "description": "Total number of questions"
+                }
+                
+            }
+            
+        }, 
+
+        "OneQuestionTestsRequest": {
+             "type":"object",
+            "properties": 
+                        {
+                            "answers": {
+                                    "type":"array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "description": "Variants response"
+                                },
+                                "_id": {
+                                    "type": "string",
+                                    "description": "Question's id"
+                                },
+                                "question": {
+                                    "type": "string",
+                                    "description": "Test's question"
+                                },
+                                "rightAnswer": {
+                                    "type": "string",
+                                    "description": "Right answer"
+                                },
+                                "questionType": {
+                                    "type": "string",
+                                    "description": "Type of question"
+                            }
+
+                            
+                        }
+        },
+
+        "OneQuestionTestsResponse": {
+            "type":"object",
+            "properties": {
+                "data": {
+                    "type":"object",
+                    "properties": 
+                        {
+                            "answers": {
+                                    "type":"array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "description": "Variants response"
+                                },
+                                "_id": {
+                                    "type": "string",
+                                    "description": "Question's id"
+                                },
+                                "question": {
+                                    "type": "string",
+                                    "description": "Test's question"
+                                },
+                                "rightAnswer": {
+                                    "type": "string",
+                                    "description": "Right answer"
+                                },
+                                "questionType": {
+                                    "type": "string",
+                                    "description": "Type of question"
+                            }
+
+                            
+                        },
+                        "example": 
+                                [ {
+                                    "description":"Example of a theory test object:",
+ 
+                                        "answers": [
+                                            "If both are running, do sanity tests first and then smoke testing",
+                                            "Sanity Testing is also called Tester Acceptance Testing",
+                                            "Smoke and sanity tests can be performed using an automation tool",
+                                            "Smoke testing performed for a specific build is also called build verification test",
+                                            "All options are correct",
+                                            "All options are incorrent"
+                                        ],
+                                        "_id": "6107d7d7d592102ae4466ac8",
+                                        "question": "What's wrong appealing to Smoke and sanity tests?",
+                                        "rightAnswer": "If both are running, do sanity tests first and then smoke testing",
+                                        "questionType": "theory"
+                                },
+                                {
+                                    "description":"Example of a practice test object:",
+                                        "answers": [
+                                            "The stage at which the testing strategy is determined",
+                                            "Software testing life cycle",
+                                            "Final stage of software testing",
+                                            "This abbreviation has nothing to do with testing",
+                                            "All options are correct",
+                                            "All options are incorrect"
+                                        ],
+                                        "_id": "6107d49073048a242080649c",
+                                        "question": "STLC is – ",
+                                        "rightAnswer": "Software testing life cycle",
+                                        "questionType": "practice"
+
+                                }
+                                    
+                            ]
+                }
+            }
+        },
+        
+        "ManyQuestionTestsRequest": {
+             "type":"array",
+             "items": {
+                "properties": 
+                        {
+                            "answers": {
+                                    "type":"array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "description": "Variants response"
+                                },
+                                "_id": {
+                                    "type": "string",
+                                    "description": "Question's id"
+                                },
+                                "question": {
+                                    "type": "string",
+                                    "description": "Test's question"
+                                },
+                                "rightAnswer": {
+                                    "type": "string",
+                                    "description": "Right answer"
+                                },
+                                "questionType": {
+                                    "type": "string",
+                                    "description": "Type of question"
+                            }
+
+                            
+                        }
+             }
+        },
+
+        "ManyQuestionsResponse": {
+            "type":"object",
+            "properties": {
+                "data": {
+                     "type":"object",
+                     "properties": {
+                         "tests": {
+                            "type":"array",
+                             "items": {
+                                  "type": "object",
+                                  "properties": {
+                                      "answers": {
+                                          "type":"array",
+                                          "items": {
+                                                "type": "string"
+                                          },
+                                          "description": "Variants response"
+                                      },
+                                      "_id": {
+                                          "type": "string",
+                                          "description": "Question's id"
+                                      },
+                                      "question": {
+                                          "type": "string",
+                                          "description": "Test's question"
+                                      },
+                                      "rightAnswer": {
+                                          "type": "string",
+                                          "description": "Right answer"
+                                      },
+                                      "questionType": {
+                                           "type": "string",
+                                          "description": "Type of question"
+                                      }
+                                  }
+                             },
+                              "example": 
+                                [ {
+                                    "description":"Example of a theory test array:",
+                                     "tests": [
+                                        {
+                                        "answers": [
+                                            "If both are running, do sanity tests first and then smoke testing",
+                                            "Sanity Testing is also called Tester Acceptance Testing",
+                                            "Smoke and sanity tests can be performed using an automation tool",
+                                            "Smoke testing performed for a specific build is also called build verification test",
+                                            "All options are correct",
+                                            "All options are incorrent"
+                                        ],
+                                        "_id": "6107d7d7d592102ae4466ac8",
+                                        "question": "What's wrong appealing to Smoke and sanity tests?",
+                                        "rightAnswer": "If both are running, do sanity tests first and then smoke testing",
+                                        "questionType": "theory"
+                                    }
+                                   ]
+                                },
+                                {
+                                    "description":"Example of a practice test array:",
+                                    "tests": [
+                                        {
+                                        "answers": [
+                                            "The stage at which the testing strategy is determined",
+                                            "Software testing life cycle",
+                                            "Final stage of software testing",
+                                            "This abbreviation has nothing to do with testing",
+                                            "All options are correct",
+                                            "All options are incorrect"
+                                        ],
+                                        "_id": "6107d49073048a242080649c",
+                                        "question": "STLC is – ",
+                                        "rightAnswer": "Software testing life cycle",
+                                        "questionType": "practice"
+                                    }
+                                    ]
+                                }
+                                    
+                            ]
+
+                         }
+                     }
+                 },
+                 "total": {
+                    "type": "number",
+                    "minimum": 12,
+                    "maximum": 50,
+                    "description": "Total number of questions"
+                }
+            }
+            
+        },
+        "UserResultsRequest": {
+             "type":"array",
+             "items": {
+                "properties": {
+                "_id": {
+                    "type": "string",
+                    "description": "Answer's id"
+                },
+                    
+                "userAnswer": {
+                    "type": "string",
+                    "description": "User's answer"
+                },
+                "description": "Must be 12 answers"
+             }
+         },
+         "example": [
+                        {   "_id": "6107d7d7d592102ae4466abc",
+                            "userAnswer": "F5"
+                        },
+                        {   "_id": "6107d7d7d592102ae4466ac1",
+                            "userAnswer": "Returns the user to the previous page from the browser history"
+                        },
+                        {   "_id": "6107d7d7d592102ae4466acf",
+                            "userAnswer": "1: 8: 12: 100"
+                        },
+                        {   "_id": "6107d7d7d592102ae4466acb",
+                            "userAnswer": "Decision-making"
+                        },
+                        {   "_id": "6107d7d7d592102ae4466ace",
+                            "userAnswer": "High severity and high priority"
+                        },
+                        {   "_id": "6107d7d7d592102ae4466ad0",
+                            "userAnswer": "10-20"
+                        },
+                        {   "_id": "6107d7d7d592102ae4466ac2",
+                            "userAnswer": "Summary"
+                        },
+                        {   "_id": "6107d7d7d592102ae4466acc",
+                            "userAnswer": "State transition"
+                        },
+                        {   "_id": "6107d7d7d592102ae4466abf",
+                            "userAnswer": "Returns the user to the previous page from the browser history"
+                        },
+                        {   "_id": "6107d7d7d592102ae4466acd",
+                            "userAnswer": "System >> Reception >> Integration"
+                        },
+                        {   "_id": "6107d7d7d592102ae4466ac6",
+                            "userAnswer": "Stress testing"
+                        },
+                        {   "_id": "6107d7d7d592102ae4466ad1",
+                            "userAnswer": "Incremental"
+                        }
+         ]
+        },
+        "UserResultsResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "rightAnswers": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "description": "question's id and user's answer"
+                        },
+                        "type": {
+                            "type": "string",
+                            "description": "Answer type"
+                        }
+                    },
+                     "example": [
+                     {  
+                        "rightAnswers": [
+                            {
+                                "_id": "6107d7d7d592102ae4466acd",
+                                "userAnswer": "System >> Reception >> Integration"
+                            },
+                            {
+                                "_id": "6107d7d7d592102ae4466ac6",
+                                "userAnswer": "Stress testing"
+                            }
+                        ],
+                        "type": "theory"
+                    }
+                ]
+                }
+            }
+        }
+    },
+    "securitySchemes": {
+        "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+}
+}

@@ -23,10 +23,10 @@ const googleLogin = async (req, res, next) => {
     if (email_verified) {
       const user = await service.getOne({ email })
       if (!user) {
-        return res.status(400).json({
+        return res.status(404).json({
           status: 'error',
-          code: 400,
-          message: 'Something went wrong...'
+          code: 404,
+          message: 'User not found'
         })
       }
       const { TOKEN_KEY } = process.env
@@ -34,7 +34,7 @@ const googleLogin = async (req, res, next) => {
       const payload = { id }
 
       const token = jwt.sign(payload, TOKEN_KEY)
-      service.update(id, { token })
+      await service.update(id, { token })
 
       res.json({
         status: 'success',

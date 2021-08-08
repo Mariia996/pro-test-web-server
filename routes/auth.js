@@ -13,4 +13,6 @@ router.post('/login', express.json(), ctrl.login)
 
 router.post('/logout', useAuth, ctrl.logout)
 
+router.post('/googlelogin', express.json(), ctrl.googleLogin)
+
 module.exports = router

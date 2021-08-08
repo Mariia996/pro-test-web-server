@@ -1,4 +1,4 @@
-const {Question} = require('../models')
+const { Question } = require('../models')
 
 const getAll = (filter = {}) => {
   return Question.find(filter)

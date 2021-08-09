@@ -1,0 +1,48 @@
+{
+  "name": "pro-test-web-server",
+  "version": "1.0.0",
+  "description": "Pro Test Web Server",
+  "main": "index.js",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "cross-env": "7.0.3",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "google-auth-library": "^7.5.0",
+    "joi": "^17.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "5.13.0",
+    "mongoose-paginate-v2": "^1.4.1",
+    "morgan": "1.10.0",
+    "nanoid": "^3.1.23",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "swagger-ui-express": "^4.1.6"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./bin/server.js",
+    "dev": "nodemon ./bin/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mariia996/pro-test-web-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mariia996/pro-test-web-server/issues"
+  },
+  "homepage": "https://github.com/Mariia996/pro-test-web-server#readme",
+  "devDependencies": {
+    "eslint": "^7.19.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "nodemon": "^2.0.12",
+    "prettier": "^2.3.2"
+  }
+}

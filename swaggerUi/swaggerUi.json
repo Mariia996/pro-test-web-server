@@ -10,7 +10,7 @@
       },
       "contact": {
         "name": "Backend github repository",
-        "url": "https://"
+        "url": "https://github.com/Mariia996/pro-test-web-server"
       }
     },
     "produces": ["application/json"],
@@ -218,7 +218,7 @@
                     "description": "This question already exist"
                 }
              }
-            } 
+            }
         },
         "/api/v1/tests/many": {
              "post": {
@@ -397,7 +397,7 @@
                "message": {
                         "type": "string",
                         "example": "Get success"
-                    }, 
+                    },
               "data": {
                    "type":"object",
                    "properties": {
@@ -455,7 +455,7 @@
                                       }
                                   }
                              },
-                              "example": 
+                              "example":
                                 [ {
                                     "description":"Example of a theory test array:",
                                      "tests": [
@@ -494,7 +494,7 @@
                                     }
                                     ]
                                 }
-                                    
+
                             ]
 
                          }
@@ -505,14 +505,14 @@
                     "minimum": 12,
                     "description": "Total number of questions"
                 }
-                
+
             }
-            
-        }, 
+
+        },
 
         "OneQuestionTestsRequest": {
              "type":"object",
-            "properties": 
+            "properties":
                         {
                             "answers": {
                                     "type":"array",
@@ -538,7 +538,7 @@
                                     "description": "Type of question"
                             }
 
-                            
+
                         }
         },
 
@@ -547,7 +547,7 @@
             "properties": {
                 "data": {
                     "type":"object",
-                    "properties": 
+                    "properties":
                         {
                             "answers": {
                                     "type":"array",
@@ -573,12 +573,12 @@
                                     "description": "Type of question"
                             }
 
-                            
+
                         },
-                        "example": 
+                        "example":
                                 [ {
                                     "description":"Example of a theory test object:",
- 
+
                                         "answers": [
                                             "If both are running, do sanity tests first and then smoke testing",
                                             "Sanity Testing is also called Tester Acceptance Testing",
@@ -608,16 +608,16 @@
                                         "questionType": "practice"
 
                                 }
-                                    
+
                             ]
                 }
             }
         },
-        
+
         "ManyQuestionTestsRequest": {
              "type":"array",
              "items": {
-                "properties": 
+                "properties":
                         {
                             "answers": {
                                     "type":"array",
@@ -643,7 +643,7 @@
                                     "description": "Type of question"
                             }
 
-                            
+
                         }
              }
         },
@@ -684,7 +684,7 @@
                                       }
                                   }
                              },
-                              "example": 
+                              "example":
                                 [ {
                                     "description":"Example of a theory test array:",
                                      "tests": [
@@ -723,7 +723,7 @@
                                     }
                                     ]
                                 }
-                                    
+
                             ]
 
                          }
@@ -736,7 +736,7 @@
                     "description": "Total number of questions"
                 }
             }
-            
+
         },
         "UserResultsRequest": {
              "type":"array",
@@ -746,7 +746,7 @@
                     "type": "string",
                     "description": "Answer's id"
                 },
-                    
+
                 "userAnswer": {
                     "type": "string",
                     "description": "User's answer"
@@ -812,7 +812,7 @@
                         }
                     },
                      "example": [
-                     {  
+                     {
                         "rightAnswers": [
                             {
                                 "_id": "6107d7d7d592102ae4466acd",

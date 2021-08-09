@@ -1,6 +1,7 @@
 /* eslint-disable object-curly-spacing */
 const express = require('express')
 const cors = require('cors')
+require('dotenv').config()
 
 const swaggerUi = require('swagger-ui-express')
 
@@ -10,7 +11,10 @@ const {authRouter, usersRouter, testsRouter} = require('./routes')
 
 const app = express()
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument)) // http://localhost:4000/api-docs/
+const { SERVER_URL } = process.env
+swaggerDocument.servers[0].url = SERVER_URL
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 app.use(cors())
 

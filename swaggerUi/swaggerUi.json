@@ -125,6 +125,39 @@
                 }
             }
         },
+        "/api/v1/auth/googlelogin": {
+            "post": {
+                "tags": ["AUTH"],
+                "summary": "Google authentication",
+                "parameters": [],
+                "requestBody": {
+                    "description": "Authentication with Google",
+                    "required": true,
+                    "content": {
+                       "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginWithGoogleRequest"
+                            }
+                       }
+                    }
+            },
+            "responses": {
+                "200": {
+                    "description": "Login with google success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginWithGoogleResponse"
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "Bad request"
+                }
+            }
+        }
+        },
         "/api/v1/users/current": {
              "get": {
                 "tags": ["USERS"],
@@ -390,6 +423,40 @@
                         "example": "Logout success"
                     }
            }
+        },
+        "LoginWithGoogleRequest": {
+            "type":"object",
+            "properties": {
+                "tokenId": {
+                    "type": "string",
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMGJhMmQ0MmQxNTI1OWNiM2YwYzg0MiIsImlhdCI6MTYyODE1MjUzM30.Jy66w-eLFvvTVWFfdAysMOZ902dLz2n0Xly-LeBxjHY"
+                }
+            }
+        },
+        "LoginWithGoogleResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "user": {
+                            "type": "object",
+                            "properties": {
+                                "email": {
+                                    "type": "string",
+                                    "description": "User's email",
+                                    "format":"email"
+                                }
+                            }
+                        },
+                        "token": {
+                            "type": "string",
+                            "description": "Session's access token",
+                            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMGJhMmQ0MmQxNTI1OWNiM2YwYzg0MiIsImlhdCI6MTYyODE1MjUzM30.Jy66w-eLFvvTVWFfdAysMOZ902dLz2n0Xly-LeBxjHY"
+                        }
+                    }
+                }
+            }
         },
         "CurrentUserResponse": {
             "type":"object",
